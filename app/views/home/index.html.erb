@@ -1,0 +1,41 @@
+<% if @articles.present? %>
+  <div class="row mt-5">
+    <div class="col-lg-6 offset-lg-3">
+      <% if @articles.present? %>
+        <% @articles.each do |article| %>
+          <%= link_to article.slug , style: 'text-decoration: none' do %>
+            <div class="card card-default mb-3 shadow mx-3">
+              <div class="card-body padding-bottom-5">
+                <p class="text-center text-grey"><%=article.published_date.strftime("%b %d, %Y")%> • <%= article&.user&.full_name%></p>
+                <h2 class="text-center color-black"><%= article.title%></h2>
+                <p class="color-black"><%= "#{Nokogiri::HTML(article.body.to_plain_text).text[0..300]}#{Nokogiri::HTML(article.body.to_plain_text).text.length > 300 ? '...' : ''}" %></p>
+                <div class="text-center">
+                  <%#if article.body.to_plain_text.length > 100 %>
+                  <%= link_to 'Read', show_article_path(article), class:'btn btn-default border plr-10'%>
+                  <%#end%>
+                </div>
+              </div>
+            </div>
+          <%end%>
+        <%end%>
+      <%else%>
+        <div class="alert alert-infor">
+          No Article Found.
+        </div>
+      <%end%>
+      <% if @articles.present? %>
+        <div class="d-flex" style="justify-content: center">
+          <%== pagy_bootstrap_nav(@pagy) %>
+        </div>
+      <%end%>
+    </div>
+  </div>
+<%else%>
+  <div class="row">
+    <div class="col-lg-4 offset-lg-4">
+      <div class="alert alert-danger text-center mt-4">
+        <h2>No article found </h2>
+      </div>
+    </div>
+  </div>
+<%end%>

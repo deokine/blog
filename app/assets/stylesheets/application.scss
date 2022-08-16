@@ -1,0 +1,71 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require summernote-bs4
+ */
+
+//= require actiontext
+// @import "bootstrap";
+// @import "summernote-bs4";
+
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+    height: 7px;
+}
+
+ .text-grey {
+   color: grey !important;
+ }
+
+ .padding-bottom-5 {
+    padding-bottom: 25px !important;
+ }
+
+ .plr-10{
+    padding: 0px 10px !important;
+ }
+
+ .border-red {
+   border: solid 1px red;
+ }
+
+ .color-black {
+   color: black !important;
+ }
+ .border-none {
+   border: none !important;
+ }
+
+ .footer {
+  //  border-top: 1px solid grey;
+    padding: 10px;
+    text-align: center;
+    // background-color: #efefef;
+    // position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: black;
+ }
+
+ .footer a {
+   text-decoration: none;
+   color: black;
+   font-size: 12px;
+ }
+
+ .trix-content {
+   font-size: 1.2rem !important;
+ }

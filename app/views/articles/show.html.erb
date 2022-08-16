@@ -1,0 +1,74 @@
+<div style="">
+  <div class="row mt-4">
+    <div class="col-lg-8 offset-2">
+      <div class="card border-none">
+        <div class="card-body border-none">
+          <p class="text-grey text-center">
+            <%= @article.published_date.present? ? "#{@article.published_date.strftime("%b %d, %Y")} • #{@article&.user&.full_name}" : '' %>
+          </p>
+          <h2 class="text-center"><%= @article.title %></h2>
+
+          <p class="article-body">
+            <%= @article.body %>
+          </p>
+
+          <% if user_signed_in? && current_user.id == @article.user.id %>
+            <p>
+              <strong>Author:</strong>
+              <%= @article.user.full_name %>
+            </p>
+          <%end%>
+
+          <% if user_signed_in? && current_user.id == @article.user_id%>
+            <%= link_to 'Edit', edit_article_path(@article) %> |
+          <%end%>
+
+          <% if current_user %>
+            <% if @likes.map(&:user).include?(current_user) %>
+              <%= link_to "Unlike", like_path(@likes.find_by(article: @article)), method: :delete %>
+            <% else %>
+              <%= form_for Like.new do |f| %>
+                <div>
+                  <%= f.hidden_field :article_id, value: @article.id %>
+                  <button>Like</button>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+
+          <h3>Comments</h3>
+          <% @article.comments.each do |comment| %>
+            <div>
+              <strong><%= comment.user.full_name %>:</strong>
+              <span><%= comment.body %></span>
+            </div>
+          <% end %>
+
+          <% if current_user %>
+            <%= form_for Comment.new do |f| %>
+              <div>
+                <%= f.label :body, "Comment" %>
+                <%= f.text_field :body %>
+                <%= f.hidden_field :article_id, value: @article.id %>
+                <button>Comment</button>
+              </div>
+            <% end %>
+          <% else %>
+            <p>Please Sign In to post comment</p>
+          <% end %>
+          <%= link_to 'Back', root_path %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    $(".trix-content").find("img").each(function(i,e){
+      $(e).wrap(`<a href='${$(e).attr('src')}'></a>`)
+      // $(e).replaceWith(`<a href='${$(e).attr('src')}'>${e}</a>`)
+    })
+    $(".trix-content").find('a').attr("target","_blank");
+  })
+</script>
